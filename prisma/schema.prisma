@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//created while introsecption learning, later commented and migrated
+// model test {
+//   id     Int      @id
+//   active Boolean? //nullable->?
+// }
+
+model User {
+  @@map(name:"user")//giving table name
+  id       Int    @id @default(autoincrement())
+  username String @unique @db.VarChar(255)
+  posts Post[]//user can have many posts
+}
+
+model Post{
+  @@map(name:"post")
+  id Int @id @default(autoincrement())
+  title String
+  post String @db.VarChar(500)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user User @relation(fields: [user_id], references:[id])//post belongs to only one user
+  user_id Int 
+}

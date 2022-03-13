@@ -1,0 +1,59 @@
+Prisma is a next-generation object–relational mapper (ORM) that claims to help developers build faster and make fewer errors. Prisma takes a different approach to ORMs compared to traditional ORMs. It uses a custom Schema Definition Language (SDL) that automatically writes migrations and generates type-safe code.
+
+we can use prisma with every db
+
+//first 
+>npm init -y
+>npm install prisma --save-dev
+
+now we can invoke the prisma cli prefixing it with npx
+
+//now actual works i.e, init prisma project
+>npx prisma init
+file will be changed with some folders and dependencies
+
+now connecting to data base, chnage the url in .env file
+
+change to 
+DATABASE_URL="mysql://root:chirag@localhost:3306/myDbName"
+
+provider = "mysql"
+
+open mysql workbench> connect> go to Schema and use commond to create database named myDbName
+
+//now schema defination
+
+we are making user and post table foregin key is used in post as user_id
+
+goto schema.prisma file and define schemas there
+onces the schema is defined we nned to migrate it
+
+//migrations(prisma schema to mysql)
+To map your data model to the database schema, you need to use the prisma migrate CLI commands:
+>npx prisma migrate dev --name init
+
+now you can see table in mysql workbench
+and amigration folder wil also be creating in prisma folder
+
+Note: when ever we want to make change with database (alter drop or somethin with schema) we need to run migrate
+
+//introspection (mysql into prisma schema)
+on way to do mannually
+> npx prisma introspect --force
+
+
+//data relations 
+we have to alter the schema foreign key 
+if 1 to many foregin key to many side
+id many to many foregin to both side
+
+//prisma studio
+we can visual our data base drim prisma studio
+>npx prisma studio
+view at localhost:5555
+
+//prisma client
+we nned client to make query to database
+The Prisma client is an auto-generated library that can be used as an alternative to Prisma bindings to access data in your applications
+>npm install @prisma/client
+ now we can make rest api using backend framework
